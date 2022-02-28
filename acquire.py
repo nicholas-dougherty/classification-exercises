@@ -10,17 +10,16 @@ def get_titanic_data(use_cache=True):
 
 #    if os.path.isfile(filename):
 #        return pd.read_csv(filename)
-if os.path.exists('titanic.csv') and use_cache:
+    if os.path.exists('titanic.csv') and use_cache:
         print('Using cached csv')
         return pd.read_csv('titanic.csv')
     print('Acquiring data from SQL database')
     
-    else:
         # read the SQL query into a dataframe
-        df = pd.read_sql('SELECT * FROM passengers', get_db_url('titanic_db'))
+    df = pd.read_sql('SELECT * FROM passengers', get_db_url('titanic_db'))
 
         # Write that dataframe to disk for later. Called "caching" the data for later.
-        df.to_csv('titanic.csv', index=False)
+    df.to_csv('titanic.csv', index=False)
 
         # Return the dataframe to the calling code
     return df  
@@ -38,23 +37,16 @@ def get_iris_data(use_cache=True):
         print('Using cached csv')
         return pd.read_csv('iris.csv')
     print('Acquiring data from SQL database')
-    else:
         # read the SQL query into a dataframe
-        df = pd.read_sql('''
-                        SELECT 
-                            species_id,
-                            species_name,
-                            sepal_length,
-                            sepal_width,
-                            petal_length,
-                            petal_width
-                        FROM measurements
-                        JOIN species USING(species_id)
-                        '''
-                , get_db_url('iris_db'))
+    df = pd.read_sql('''
+                    SELECT *
+                    FROM measurements
+                    JOIN species USING(species_id)
+                    '''
+            , get_db_url('iris_db'))
 
         # Write that dataframe to disk for later. Called "caching" the data for later.
-        df.to_csv('iris.csv', index=False)
+    df.to_csv('iris.csv', index=False)
 
         # Return the dataframe to the calling code
     return df  
@@ -70,16 +62,14 @@ def get_telco_data(use_cache=True):
         print('Using cached csv')
         return pd.read_csv('telco.csv')
     print('Acquiring data from SQL database')
-    
-    else:
-        df = pd.read_sql('''   
-                        SELECT * 
-                            FROM customers
-                            JOIN contract_types USING(contract_type_id)
-                            JOIN internet_service_types USING(internet_service_type_id)
-                            JOIN payment_types USING(payment_type_id)
-                        '''
-                , get_db_url('telco_churn'))
+    df = pd.read_sql('''   
+                    SELECT * 
+                        FROM customers
+                        JOIN contract_types USING(contract_type_id)
+                        JOIN internet_service_types USING(internet_service_type_id)
+                        JOIN payment_types USING(payment_type_id)
+                    '''
+            , get_db_url('telco_churn'))
     
     df.to_csv('telco.csv', index=False)
     
