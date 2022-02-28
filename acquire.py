@@ -5,17 +5,22 @@ import pandas as pd
 # 1.) Make a function named get_titanic_data that returns the titanic data from the codeup
 # data science database as a pandas data frame.
 
-def get_titanic_data():
-    filename = "titanic.csv"
+def get_titanic_data(use_cache=True):
+#    filename = "titanic.csv"
 
-    if os.path.isfile(filename):
-        return pd.read_csv(filename)
+#    if os.path.isfile(filename):
+#        return pd.read_csv(filename)
+if os.path.exists('titanic.csv') and use_cache:
+        print('Using cached csv')
+        return pd.read_csv('titanic.csv')
+    print('Acquiring data from SQL database')
+    
     else:
         # read the SQL query into a dataframe
         df = pd.read_sql('SELECT * FROM passengers', get_db_url('titanic_db'))
 
         # Write that dataframe to disk for later. Called "caching" the data for later.
-        df.to_file(filename)
+        df.to_csv('titanic.csv', index=False)
 
         # Return the dataframe to the calling code
     return df  
@@ -24,11 +29,15 @@ def get_titanic_data():
 # science database as a pandas data frame. The returned data frame should include the actual name
 #  of the species in addition to the species_ids.
 
-def get_iris_data():
-    filename = "iris_df.csv"
+def get_iris_data(use_cache=True):
+#    filename = "iris_df.csv"
 
-    if os.path.isfile(filename):
-        return pd.read_csv(filename)
+#    if os.path.isfile(filename):
+#        return pd.read_csv(filename)
+    if os.path.exists('iris.csv') and use_cache:
+        print('Using cached csv')
+        return pd.read_csv('iris.csv')
+    print('Acquiring data from SQL database')
     else:
         # read the SQL query into a dataframe
         df = pd.read_sql('''
@@ -45,7 +54,7 @@ def get_iris_data():
                 , get_db_url('iris_db'))
 
         # Write that dataframe to disk for later. Called "caching" the data for later.
-        df.to_file(filename)
+        df.to_csv('iris.csv', index=False)
 
         # Return the dataframe to the calling code
     return df  
@@ -54,12 +63,14 @@ def get_iris_data():
 # In your SQL, be sure to join all 4 tables together, so that the resulting dataframe contains
 # all the contract, payment, and internet service options.
 
-def get_telco_data():
+def get_telco_data(use_cache=True):
+# filename = 'telco_churn.csv'
     
-    filename = 'telco_churn.csv'
+    if os.path.exists('telco.csv') and use_cache:
+        print('Using cached csv')
+        return pd.read_csv('telco.csv')
+    print('Acquiring data from SQL database')
     
-    if os.path.isfile(filename):
-        return pd.read_csv(filename)
     else:
         df = pd.read_sql('''   
                         SELECT * 
@@ -70,7 +81,7 @@ def get_telco_data():
                         '''
                 , get_db_url('telco_churn'))
     
-    df.to_file(filename)
+    df.to_csv('telco.csv', index=False)
     
     return df
 

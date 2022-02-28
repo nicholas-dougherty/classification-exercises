@@ -6,7 +6,7 @@ env.py
 .ipynb_checkpoints/
 __pycache__
 *.csv
-.xlsx
+*.xlsx
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
