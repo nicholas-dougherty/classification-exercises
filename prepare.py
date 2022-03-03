@@ -3,8 +3,8 @@ import numpy as np
 
 def prep_iris(df):
     df = df.drop(columns='species_id').rename(columns={'species_name': 'species'})
-    species_as_dummies = pd.get_dummies(df.species, drop_first=True)
-    df = pd.concat([df, species_as_dummies], axis=1)
+    #species_as_dummies = pd.get_dummies(df.species, drop_first=True)
+    #df = pd.concat([df, species_as_dummies], axis=1)
     return df
 
 def prep_titanic(df):
