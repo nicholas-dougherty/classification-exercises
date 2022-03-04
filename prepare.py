@@ -20,7 +20,7 @@ def prep_titanic(df):
     # fill missing values
     df['embark_town'] = df.embark_town.fillna(value='Southampton')
     # encode categorical variables
-    df_dummies = pd.get_dummies(titanic[['embark_town', 'sex']], dummy_na=False, drop_first=True)
+    df_dummies = pd.get_dummies(df[['embark_town', 'sex']], dummy_na=False, drop_first=True)
     df = pd.concat([df, df_dummies], axis=1)
     df = df.rename(columns={'embark_town_Queenstown': 'Queenstown', 'embark_town_Southampton': 'Southampton', 'sex_male': 'male'})
     # df = df.drop(columns=['sex', 'embark_town'])
