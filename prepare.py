@@ -48,5 +48,5 @@ def prep_telco(df):
     # drop redundant, categorical variables. 
     df = df.drop(columns=['gender', 'partner', 'dependents', 'phone_service', 'multiple_lines',
                                 'internet_service_type', 'contract_type', 'payment_type', 'paperless_billing',
-                                'churn', 'device_protection'])
+                                'device_protection'])
     return df 
