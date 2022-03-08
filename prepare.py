@@ -50,3 +50,24 @@ def prep_telco(df):
                                 'internet_service_type', 'contract_type', 'payment_type', 'paperless_billing',
                                 'device_protection'])
     return df 
+
+def prep_titanic_keep_age(df):
+    '''
+    takes in a dataframe of the titanic dataset as it is acquired and returns a cleaned dataframe
+    arguments: df: a pandas DataFrame with the expected feature names and columns
+    return: clean_df: a dataframe with the cleaning operations performed on it
+    '''
+    # drop any duplicate rows
+    df = df.drop_duplicates()
+    # drop columns we want to remove
+    df = df.drop(columns=['deck', 'embarked', 'class', 'passenger_id'])
+    # fill missing values
+    df['embark_town'] = df.embark_town.fillna(value='Southampton')
+    # encode categorical variables
+    df_dummies = pd.get_dummies(df[['embark_town', 'sex']], dummy_na=False, drop_first=True)
+    df = pd.concat([df, df_dummies], axis=1)
+    df = df.rename(columns={'embark_town_Queenstown': 'Queenstown', 'embark_town_Southampton': 'Southampton', 'sex_male': 'male'})
+    df.age = df.age.fillna(df.age.mean())
+    return df.drop(columns=['sex', 'embark_town'])
+
+    
